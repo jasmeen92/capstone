@@ -5,7 +5,7 @@
 # Step 1:
 # Build image and add a descriptive tag
 
-docker build --tag=demolocal .
+docker build --tag=nginxdemos .
 
 # Step 2: 
 # List docker images
@@ -13,7 +13,8 @@ docker build --tag=demolocal .
 docker image ls
 
 # Step 3: 
-# Run flask app
+# Run hello world app
 
-docker run -p 8000:80 demolocal
+docker run -p 80:80 nginxdemos
 
+#docker run -P -d nginxdemos/hello
