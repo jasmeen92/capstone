@@ -5,7 +5,7 @@
 # Step 1:
 # Build image and add a descriptive tag
 
-docker build --tag=nginxdemos .
+docker build --tag=demolocal .
 
 # Step 2: 
 # List docker images
@@ -13,8 +13,8 @@ docker build --tag=nginxdemos .
 docker image ls
 
 # Step 3: 
-# Run hello world app
+# Run web app
 
-docker run -p 80:80 nginxdemos
+docker run -p 8000:80 demolocal
 
-#docker run -P -d nginxdemos/hello
+
