@@ -15,18 +15,21 @@ pipeline {
                   sh 'tidy -q -e *.html'
               }
          }
-         stage('Security Scan') {
+         stage('Push image') {
               steps { 
-                 aquaMicroscanner imageName: 'alpine:latest', notCompleted: 'exit 1', onDisallowed: 'fail'
+                 docker push imageName: 'demolocal:latest', notCompleted: 'exit 1', onDisallowed: 'fail'
               }
          }         
-         stage('Upload to AWS') {
+         stage('set current kubectl context') {
               steps {
-                  withAWS(region:'us-east-2',credentials:'aws-static') {
-                  sh 'echo "Uploading content with AWS creds"'
-                      s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html', bucket:'static-jenkins-pipeline')
-                  }
+                  kubectl config current-context
+              }
+         }
+         stage('Deploy container') {
+              steps {
+                  docker run -p 8000:80 demolocal
               }
          }
      }
 }
+
