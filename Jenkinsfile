@@ -11,7 +11,7 @@ pipeline {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
-						docker build -t andresaaap/cloudcapstone:$BUILD_ID .
+						docker build -t jasmeen92/webapp:$BUILD_ID .
 					'''
 				}
 			}
@@ -22,7 +22,7 @@ pipeline {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-						docker push andresaaap/cloudcapstone:$BUILD_ID
+						docker push jasmeen92/webapp:$BUILD_ID
 					'''
 				}
 			}
@@ -30,7 +30,7 @@ pipeline {
 
 		stage('Set current kubectl context') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-static') {
+				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
 						kubectl config use-context arn:aws:eks:us-east-1:546547842218:cluster/prodalvima2
 					'''
@@ -40,9 +40,9 @@ pipeline {
 
 		stage('Create blue container') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-static') {
+				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
-						kubectl run blueimage --image=andresaaap/cloudcapstone:$BUILD_ID --port=80
+						kubectl run blueimage --image=jasmeen92/webapp:$BUILD_ID --port=80
 					'''
 				}
 			}
@@ -50,7 +50,7 @@ pipeline {
 
 		stage('Expose container') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-static') {
+				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
 						kubectl expose deployment blueimage --type=LoadBalancer --port=80
 					'''
@@ -60,7 +60,7 @@ pipeline {
 
 		stage('Domain redirect blue') {
 			steps {
-				withAWS(region:'us-east-1', credentials:'aws-static') {
+				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
 						aws route53 change-resource-record-sets --hosted-zone-id ZKCU19G790VD6 --change-batch file://alias-record.json
 					'''
