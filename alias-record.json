@@ -1,0 +1,14 @@
+{
+     "Comment": "Creating Alias resource record sets in Route 53 for blue system",
+     "Changes": [{
+                "Action": "CREATE",
+                "ResourceRecordSet": {
+                            "Name": "udacitypinzoncloudcapstone.de",
+                            "Type": "A",
+                            "AliasTarget":{
+                                    "HostedZoneId": "Z35SXDOTRQ7X7K",
+                                    "DNSName": "dualstack.",
+                                    "EvaluateTargetHealth": false
+                              }}
+                          }]
+}
