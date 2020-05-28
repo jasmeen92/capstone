@@ -32,7 +32,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
-						kubectl config use-context arn:aws:eks:us-east-1:546547842218:cluster/prodalvima2
+						kubectl config use-context arn:aws:eks:us-east-2:925716863138:cluster/quad
 					'''
 				}
 			}
