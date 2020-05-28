@@ -11,7 +11,7 @@ pipeline {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
-						docker build -t jasmeen92/webapp:$BUILD_ID .
+						docker build -t jasmeen92/webapp:testgreenimage .
 					'''
 				}
 			}
@@ -22,7 +22,7 @@ pipeline {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-						docker push jasmeen92/webapp:$BUILD_ID
+						docker push jasmeen92/webapp:testgreenimage
 					'''
 				}
 			}
