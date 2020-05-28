@@ -42,7 +42,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
-						kubectl run blueimage --image=jasmeen92/webapp:$BUILD_ID --port=80
+						kubectl run blueimage --image=jasmeen92/webapp:testgreenimage --port=80
 					'''
 				}
 			}
