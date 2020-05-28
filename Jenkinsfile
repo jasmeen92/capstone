@@ -11,7 +11,7 @@ pipeline {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
-						docker build -t jasmeen92/webapp:testgreenimage .
+						docker build -t jasmeen92/webapp:$BUILD_ID .
 					'''
 				}
 			}
@@ -22,7 +22,7 @@ pipeline {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
 					sh '''
 						docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-						docker push jasmeen92/webapp:testgreenimage
+						docker push jasmeen92/webapp:$BUILD_ID
 					'''
 				}
 			}
@@ -42,7 +42,7 @@ pipeline {
 			steps {
 				withAWS(region:'us-east-2', credentials:'aws-static') {
 					sh '''
-						kubectl run blueimage --image=jasmeen92/webapp:testgreenimage --port=80
+						kubectl run blueimage --image=jasmeen92/webapp:$BUILD_ID --port=80
 					'''
 				}
 			}
