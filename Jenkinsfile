@@ -78,5 +78,15 @@ pipeline {
 				}
 			}
 		}
+
+               stage('get service url') {
+                        steps {
+                                withAWS(region:'us-east-2', credentials:'jenkins') {
+                                        sh '''
+                                                kubectl get services
+                                        '''
+                                }
+                        }
+                }
 	}
 }
