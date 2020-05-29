@@ -59,6 +59,16 @@ pipeline {
 			}
 		}
 
+		stage('Expose container') {
+			steps {
+				withAWS(region:'us-east-2', credentials:'jenkins') {
+					sh '''
+						kubectl expose deployment blueimage --type=LoadBalancer --port=80
+					'''
+				}
+			}
+		}
+
 		stage('Domain redirect blue') {
 			steps {
 				withAWS(region:'us-east-2', credentials:'jenkins') {
