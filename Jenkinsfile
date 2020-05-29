@@ -53,7 +53,8 @@ pipeline {
 			steps {
 				withAWS(region:'us-east-2', credentials:'jenkins') {
 					sh '''
-						kubectl expose deployment blueimage --type=LoadBalancer --port=80
+						kubectl apply -f ./blue-green-service.json
+                                                kubectl expose deployment blueimage --type=LoadBalancer --port=80
 					'''
 				}
 			}
