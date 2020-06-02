@@ -21,14 +21,14 @@ spec:
         app: capstone
     spec:
       containers:
-        - image: jasmeen92/webapp
-          imagePullPolicy: Always
-          name: testgreenimage
-          ports:
-            - containerPort: 80
-        - image: jasmeen92/webapp
+        - image: jasmeen92/webapp:testblueimage
           imagePullPolicy: Always
           name: testblueimage
+          ports:
+            - containerPort: 80
+        - image: jasmeen92/webapp:testgreenimage
+          imagePullPolicy: Always
+          name: testgreenimage
           ports:
             - containerPort: 80
 
