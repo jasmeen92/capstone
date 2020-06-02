@@ -3,19 +3,48 @@ kind: Deployment
 metadata:
   name: capstone
   labels:
-    app: nginx
+    app: capstone
+  namespace: default
 spec:
-  replicas: 2
+  replicas: 2 
   selector:
     matchLabels:
-      app: nginx
+      app: capstone
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: bluegreen
   template:
     metadata:
       labels:
-        app: nginx
+        app: capstone
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+        - image: jasmeen92/webapp
+          imagePullPolicy: Always
+          name: testgreenimage
+          ports:
+            - containerPort: 80
+        - image: jasmeen92/webapp
+          imagePullPolicy: Always
+          name: testblueimage
+          ports:
+            - containerPort: 80
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: capstone
+  labels:
+    app: capstone
+spec:
+  type: LoadBalancer
+  selector:
+    app: capstone
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
