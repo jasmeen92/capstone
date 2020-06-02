@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capstone
+  labels:
+    app: capstone
+  namespace: default
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: capstone
+  template:
+    metadata:
+      labels:
+        app: capstone
+    spec:
+      containers:
+        - image: jasmeen92/webapp:testgreenimage
+          imagePullPolicy: Always
+          name: testgreenimage
+          ports:
+            - containerPort: 80
+
