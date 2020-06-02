@@ -43,6 +43,7 @@ pipeline {
                         steps {
                                 withAWS(region:'us-east-2', credentials:'jenkins') {
                                         sh '''
+                                                kubectl apply -f deployment.yml
                                                 kubectl apply -f ./blue-green-service.json
                                         '''
                                 }
