@@ -22,7 +22,7 @@
             "containers":[
                {
                   "name":"blue",
-                  "image":"andresaaap/testblueimage",
+                  "image":"jasmeen92/webapp:testblueimage",
                   "ports":[
                      {
                         "name":"http-server",
